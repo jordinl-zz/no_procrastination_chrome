@@ -30,13 +30,18 @@
         html_list = $('#domain_list');
         html_list.html('');
         $.each(list, function(index, value){
-          html_list.append('<li>' + value + '</li>');
+          html_list.append('<tr><td class="domain">' + value + '</td><td><a href="#" class="remove">Remove</a></td></tr>');
         });
       }
       initialize = function(){
         set_button_text();
         list = JSON.parse(localStorage['no_procrast_list'] || '[]');
         parse_list();
+        $('.remove').click(function(){
+          list = _.without(list, $(this).parents('tr').children('.domain').text());
+          localStorage['no_procrast_list'] = JSON.stringify(list);
+          parse_list();
+        });
       }
     </script>
 
@@ -47,7 +52,7 @@
       <input name="domain" id='domain'/>
       <input type='submit' value='Add' />
     </form>
-    <ul id='domain_list'>
-    </ul>
+    <table id='domain_list'>
+    </table>
   </body>
 </html>
