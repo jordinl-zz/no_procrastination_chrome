@@ -17,7 +17,7 @@
 
       chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
         chrome.tabs.executeScript(tabId, {
-          file: "hide_domains.js" 
+          file: "block_domains.js" 
         });
       });
     </script>

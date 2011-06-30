@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["hide_domains.js"],
+      "js": ["block_domains.js"],
       "run_at": "document_start"
     }
   ],
