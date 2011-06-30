@@ -10,14 +10,15 @@
           if (request.data == "domain_list"){
             sendResponse({data: localStorage['no_procrast_list']});
           }
+          if (request.data == "is_paused"){
+            sendResponse({is_paused: is_paused()});
+          }
        });
 
       chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-        if(!is_paused()){
-          chrome.tabs.executeScript(tabId, {
-            file: "hide_domains.js" 
-          });
-        }
+        chrome.tabs.executeScript(tabId, {
+          file: "hide_domains.js" 
+        });
       });
     </script>
   </head>

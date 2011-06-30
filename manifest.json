@@ -6,6 +6,13 @@
     "tabs", "http://*/*", "https://*/*"
   ],
   "name": "No Procrastination",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["hide_domains.js"],
+      "run_at": "document_start"
+    }
+  ],
   "description": "No procrastination boosts your productivity by blocking any website you want",
   "browser_action": {
       "default_icon": "icon.png",
