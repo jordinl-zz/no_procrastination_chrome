@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "background_page": "background.html",
+  "icon": "icon.png",
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
+  "name": "No Procrastination",
+  "description": "No procrastination boosts your productivity by blocking any website you want",
+  "browser_action": {
+      "default_icon": "icon.png",
+      "popup": "popup.html"
+  }
+}

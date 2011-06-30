@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+    <script src='http://documentcloud.github.com/underscore/underscore-min.js'></script>
+    <script type='text/javascript'>
+      set_button_text = function(){
+        button = $('#pause_button');
+        button.html(is_paused() ? 'Unpause' : 'Pause');
+      }
+      on_button_clicked = function(){
+        localStorage['no_procrast_is_paused'] = !is_paused();
+        set_button_text();
+        return false;
+      }
+      is_paused = function(){
+        return localStorage['no_procrast_is_paused'] == 'true';
+      }
+      add_domain = function(){
+        domain = document.getElementById('domain').value;
+        list = JSON.parse(localStorage['no_procrast_list'] || '[]');
+        if(!_.include(list, domain)){
+          list.push(domain);
+          list = _.sortBy(list, function(val){ return val; });
+          localStorage['no_procrast_list'] = JSON.stringify(list);
+        }
+        parse_list();
+        return false;
+      }
+      parse_list = function(){
+        html_list = $('#domain_list');
+        html_list.html('');
+        $.each(list, function(index, value){
+          html_list.append('<li>' + value + '</li>');
+        });
+      }
+      initialize = function(){
+        set_button_text();
+        list = JSON.parse(localStorage['no_procrast_list'] || '[]');
+        parse_list();
+      }
+    </script>
+
+  </head>
+  <body onload='initialize()'>
+    <button id="pause_button" action="#" onclick="on_button_clicked()">Pause</button>
+    <form id="add_domain" onsubmit='return add_domain()'>
+      <input name="domain" id='domain'/>
+      <input type='submit' value='Add' />
+    </form>
+    <ul id='domain_list'>
+    </ul>
+  </body>
+</html>

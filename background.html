@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script>
+      is_paused = function(){
+        return localStorage['no_procrast_is_paused'] == 'true';
+      }
+
+      chrome.extension.onRequest.addListener(
+        function(request, sender, sendResponse) {
+          if (request.data == "domain_list"){
+            sendResponse({data: localStorage['no_procrast_list']});
+          }
+       });
+
+      chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+        if(!is_paused()){
+          chrome.tabs.executeScript(tabId, {
+            file: "hide_domains.js" 
+          });
+        }
+      });
+    </script>
+  </head>
+</html>
