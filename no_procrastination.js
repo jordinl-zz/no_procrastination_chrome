@@ -1,14 +1,8 @@
 NoProc = {
-  
-  set_button_text: function(){
+
+  set_pause_button_text: function(){
     button = $('#pause_button');
     button.html(NoProc.is_paused() ? 'Unpause' : 'Pause');
-  },
-
-  on_button_clicked: function(){
-    localStorage['no_procrast_is_paused'] = !NoProc.is_paused();
-    NoProc.set_button_text();
-    return false;
   },
 
   is_paused: function(){
@@ -63,11 +57,34 @@ NoProc = {
       NoProc.set_domain_list([]);
       NoProc.parse_list();
     })
+    $('#pause_button').click(function(e){
+      e.preventDefault();
+      localStorage['no_procrast_is_paused'] = !NoProc.is_paused();
+      NoProc.set_pause_button_text();
+    });
   },
 
   initialize_popup: function(){
-    NoProc.set_button_text();
+    NoProc.set_pause_button_text();
     NoProc.parse_list();
     NoProc.bind_events();
+  },
+
+  initialize_background: function(){
+    chrome.extension.onRequest.addListener(
+      function(request, sender, sendResponse) {
+        if (request.data == "domain_list"){
+          sendResponse({data: JSON.stringify(NoProc.domain_list())});
+        }
+        if (request.data == "is_paused"){
+          sendResponse({is_paused: NoProc.is_paused()});
+        }
+     });
+
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+      chrome.tabs.executeScript(tabId, {
+        file: "block_domains.js" 
+      });
+    });
   }
 }

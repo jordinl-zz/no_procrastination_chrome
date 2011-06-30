@@ -1,25 +1,8 @@
 <html>
   <head>
-    <script>
-      is_paused = function(){
-        return localStorage['no_procrast_is_paused'] == 'true';
-      }
-
-      chrome.extension.onRequest.addListener(
-        function(request, sender, sendResponse) {
-          if (request.data == "domain_list"){
-            sendResponse({data: localStorage['no_procrast_list']});
-          }
-          if (request.data == "is_paused"){
-            sendResponse({is_paused: is_paused()});
-          }
-       });
-
-      chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-        chrome.tabs.executeScript(tabId, {
-          file: "block_domains.js" 
-        });
-      });
+    <script src='no_procrastination.js'></script>
+    <script type='text/javascript'>
+      NoProc.initialize_background();
     </script>
   </head>
 </html>
