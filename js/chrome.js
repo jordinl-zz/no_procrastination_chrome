@@ -6,6 +6,7 @@ NoProc.is_paused = function(){
 
 NoProc.toggle_pause = function(){
   localStorage['no_procrast.is_paused'] = !NoProc.is_paused();
+  NoProc.reset_timer();
   NoProc.set_icon();
 },
 
@@ -26,9 +27,50 @@ NoProc.set_domain_list = function(list){
   localStorage['no_procrast.list'] = JSON.stringify(list);
 },
 
+NoProc.reset_timer = function(){
+  localStorage['no_procrast.last_change'] = (new Date).getTime();
+  NoProc.set_timer();
+},
+
+NoProc.last_change = function(){
+  return parseInt(localStorage['no_procrast.last_change']) || (new Date).getTime();
+},
+
+NoProc.current_time = function(){
+  return (new Date).getTime();
+},
+
+NoProc.time_diference = function(){
+  var difference = Math.floor((NoProc.current_time() - NoProc.last_change()) / 60000);
+  var minutes = difference % 60;
+  var hours = Math.floor(difference / 60);
+  if(hours > 9){
+    return hours + 'h';
+  }
+  if(hours == 0){
+    return minutes + 'm';
+  }
+  return hours + 'h' + minutes;
+},
+
+NoProc.set_timer = function(){
+  if(!NoProc.is_paused()){
+    chrome.browserAction.setBadgeText({ text: '' });
+  }
+  else{
+    chrome.browserAction.setBadgeText({ text: NoProc.time_diference() });
+  }
+  if($('.timer').length){
+    NoProc.refresh_timer(NoProc.time_diference());
+  }
+}
+
 NoProc.initialize_background = function(){
 
   NoProc.set_icon();
+
+  NoProc.reset_timer();
+  setInterval('NoProc.set_timer()', 60);
 
   chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
