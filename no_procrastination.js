@@ -5,18 +5,6 @@ NoProc = {
     button.html(NoProc.is_paused() ? 'Unpause' : 'Pause');
   },
 
-  is_paused: function(){
-    return localStorage['no_procrast_is_paused'] == 'true';
-  },
-
-  domain_list: function(){
-    return JSON.parse(localStorage['no_procrast_list'] || '[]');
-  },
-
-  set_domain_list: function(list){
-    localStorage['no_procrast_list'] = JSON.stringify(list);
-  },
-
   add_domain: function(domain){
     var list = NoProc.domain_list();
     list.push(domain);
@@ -59,32 +47,17 @@ NoProc = {
     })
     $('#pause_button').click(function(e){
       e.preventDefault();
-      localStorage['no_procrast_is_paused'] = !NoProc.is_paused();
+      NoProc.toggle_pause();
       NoProc.set_pause_button_text();
     });
   },
 
   initialize_popup: function(){
     NoProc.set_pause_button_text();
+    NoProc.set_icon();
     NoProc.parse_list();
     NoProc.bind_events();
-  },
-
-  initialize_background: function(){
-    chrome.extension.onRequest.addListener(
-      function(request, sender, sendResponse) {
-        if (request.data == "domain_list"){
-          sendResponse({data: JSON.stringify(NoProc.domain_list())});
-        }
-        if (request.data == "is_paused"){
-          sendResponse({is_paused: NoProc.is_paused()});
-        }
-     });
-
-    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-      chrome.tabs.executeScript(tabId, {
-        file: "block_domains.js" 
-      });
-    });
   }
+
 }
+
