@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "background_page": "background.html",
+  "background_page": "html/background.html",
   "icons" : {
     "16": "img/hand_on_16.png",
     "48": "img/hand_on_48.png",
@@ -13,13 +13,13 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["block_domains.js"],
+      "js": ["js/block_domains.js"],
       "run_at": "document_start"
     }
   ],
   "description": "No procrastination boosts your productivity by blocking any website you want",
   "browser_action": {
       "default_icon": "img/hand_on_32.png",
-      "popup": "popup.html"
+      "popup": "html/popup.html"
   }
 }

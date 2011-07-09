@@ -11,7 +11,7 @@ chrome.extension.sendRequest({ data: "is_paused" }, function(response) {
     for (i = 0; i < domains.length; i++){
       domain = domains[i].replace(/\./g, '\\.').replace(/\//g, '\\/')
       if(document.location.href.match("^https?://(?:[^\/]*)?" + domain)){
-        document.location = chrome.extension.getURL('you_should_be_working.html');
+        document.location = chrome.extension.getURL('/html/you_should_be_working.html');
       }
     }
 

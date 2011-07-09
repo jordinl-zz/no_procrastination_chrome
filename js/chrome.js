@@ -10,7 +10,7 @@ NoProc.toggle_pause = function(){
 },
 
 NoProc.icon = function(){
-  file_path = NoProc.is_paused() ? 'img/hand_off_32.png' : 'img/hand_on_32.png';
+  file_path = NoProc.is_paused() ? '/img/hand_off_32.png' : '/img/hand_on_32.png';
   return chrome.extension.getURL(file_path);
 },
 
@@ -42,7 +42,7 @@ NoProc.initialize_background = function(){
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
     chrome.tabs.executeScript(tabId, {
-      file: "block_domains.js" 
+      file: "/js/block_domains.js" 
     });
   });
 }
