@@ -1,7 +1,11 @@
 {
   "version": "1.0",
   "background_page": "background.html",
-  "icon": "icon.png",
+  "icons" : {
+    "16": "img/hand_on_16.png",
+    "48": "img/hand_on_48.png",
+    "126": "img/hand_on_128.png"
+  },
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
   ],
@@ -15,7 +19,7 @@
   ],
   "description": "No procrastination boosts your productivity by blocking any website you want",
   "browser_action": {
-      "default_icon": "icon.png",
+      "default_icon": "img/hand_on_32.png",
       "popup": "popup.html"
   }
 }
