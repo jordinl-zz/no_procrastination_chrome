@@ -53,6 +53,10 @@ NoProc.time_diference = function(){
   return hours + 'h' + minutes;
 },
 
+NoProc.initialize_timer = function(){
+  NoProc.refresh_timer(NoProc.time_diference());
+},
+
 NoProc.set_timer = function(){
   if(!NoProc.is_paused()){
     chrome.browserAction.setBadgeText({ text: '' });
@@ -62,7 +66,7 @@ NoProc.set_timer = function(){
   }
   if(chrome.extension.getViews({ type: "popup" }).length){
     method = 'NoProc.refresh_timer("' + NoProc.time_diference() + '")';
-    chrome.extension.getViews({ type: "popup" })[0].eval(method);
+    chrome.extension.getViews({ type: "popup" })[0].eval(method); // whoops!
   }
 }
 
