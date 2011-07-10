@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "background_page": "html/background.html",
   "icons" : {
     "16": "img/hand_on_16.png",
@@ -17,7 +17,7 @@
       "run_at": "document_start"
     }
   ],
-  "description": "No procrastination boosts your productivity by blocking any website you want",
+  "description": "Block the sites that decrease your productivity",
   "browser_action": {
       "default_icon": "img/hand_on_32.png",
       "popup": "html/popup.html"
