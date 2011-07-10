@@ -60,8 +60,9 @@ NoProc.set_timer = function(){
   else{
     chrome.browserAction.setBadgeText({ text: NoProc.time_diference() });
   }
-  if($('.timer').length){
-    NoProc.refresh_timer(NoProc.time_diference());
+  if(chrome.extension.getViews({ type: "popup" }).length){
+    method = 'NoProc.refresh_timer("' + NoProc.time_diference() + '")';
+    chrome.extension.getViews({ type: "popup" })[0].eval(method);
   }
 }
 
@@ -70,7 +71,7 @@ NoProc.initialize_background = function(){
   NoProc.set_icon();
 
   NoProc.reset_timer();
-  setInterval('NoProc.set_timer()', 60);
+  setInterval('NoProc.set_timer()', 60000);
 
   chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
